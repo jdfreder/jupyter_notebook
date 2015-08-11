@@ -1,6 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
+"use strict";
 
 var Jupyter = Jupyter || {};
 
@@ -26,59 +27,57 @@ var jglobal = function(name, module_path){
     });
 }
 
-define(function(){
-    "use strict";
 
-    // expose modules
-    
-    jprop('utils','base/js/utils')
-    
-    //Jupyter.load_extensions = Jupyter.utils.load_extensions;
-    // 
-    jprop('security','base/js/security');
-    jprop('keyboard','base/js/keyboard');
-    jprop('dialog','base/js/dialog');
-    jprop('mathjaxutils','notebook/js/mathjaxutils');
+// expose modules
+
+jprop('utils','base/js/utils')
+
+//Jupyter.load_extensions = Jupyter.utils.load_extensions;
+// 
+jprop('security','base/js/security');
+jprop('keyboard','base/js/keyboard');
+jprop('dialog','base/js/dialog');
+jprop('mathjaxutils','notebook/js/mathjaxutils');
 
 
-    //// exposed constructors
-    jglobal('CommManager','services/kernels/comm')
-    jglobal('Comm','services/kernels/comm')
+//// exposed constructors
+jglobal('CommManager','services/kernels/comm')
+jglobal('Comm','services/kernels/comm')
 
-    jglobal('NotificationWidget','base/js/notificationwidget');
-    jglobal('Kernel','services/kernels/kernel');
-    jglobal('Session','services/sessions/session');
-    jglobal('LoginWidget','auth/js/loginwidget');
-    jglobal('Page','base/js/page');
+jglobal('NotificationWidget','base/js/notificationwidget');
+jglobal('Kernel','services/kernels/kernel');
+jglobal('Session','services/sessions/session');
+jglobal('LoginWidget','auth/js/loginwidget');
+jglobal('Page','base/js/page');
 
-    // notebook
-    jglobal('TextCell','notebook/js/textcell');
-    jglobal('OutputArea','notebook/js/outputarea');
-    jglobal('KeyboardManager','notebook/js/keyboardmanager');
-    jglobal('Completer','notebook/js/completer');
-    jglobal('Notebook','notebook/js/notebook');
-    jglobal('Tooltip','notebook/js/tooltip');
-    jglobal('Toolbar','notebook/js/toolbar');
-    jglobal('SaveWidget','notebook/js/savewidget');
-    jglobal('Pager','notebook/js/pager');
-    jglobal('QuickHelp','notebook/js/quickhelp');
-    jglobal('MarkdownCell','notebook/js/textcell');
-    jglobal('RawCell','notebook/js/textcell');
-    jglobal('Cell','notebook/js/cell');
-    jglobal('MainToolBar','notebook/js/maintoolbar');
-    jglobal('NotebookNotificationArea','notebook/js/notificationarea');
-    jglobal('NotebookTour', 'notebook/js/tour');
-    jglobal('MenuBar', 'notebook/js/menubar');
+// notebook
+jglobal('TextCell','notebook/js/textcell');
+jglobal('OutputArea','notebook/js/outputarea');
+jglobal('KeyboardManager','notebook/js/keyboardmanager');
+jglobal('Completer','notebook/js/completer');
+jglobal('Notebook','notebook/js/notebook');
+jglobal('Tooltip','notebook/js/tooltip');
+jglobal('Toolbar','notebook/js/toolbar');
+jglobal('SaveWidget','notebook/js/savewidget');
+jglobal('Pager','notebook/js/pager');
+jglobal('QuickHelp','notebook/js/quickhelp');
+jglobal('MarkdownCell','notebook/js/textcell');
+jglobal('RawCell','notebook/js/textcell');
+jglobal('Cell','notebook/js/cell');
+jglobal('MainToolBar','notebook/js/maintoolbar');
+jglobal('NotebookNotificationArea','notebook/js/notificationarea');
+jglobal('NotebookTour', 'notebook/js/tour');
+jglobal('MenuBar', 'notebook/js/menubar');
 
-    // tree
-    jglobal('SessionList','tree/js/sessionlist');
-    jglobal('ClusterList','tree/js/clusterlist');
-    jglobal('ClusterItem','tree/js/clusterlist');
+// tree
+jglobal('SessionList','tree/js/sessionlist');
+jglobal('ClusterList','tree/js/clusterlist');
+jglobal('ClusterItem','tree/js/clusterlist');
 
-    Jupyter.version = "4.1.0.dev";
-    Jupyter._target = '_blank';
-    return Jupyter;
-});
+Jupyter.version = "4.1.0.dev";
+Jupyter._target = '_blank';
+
+module.exports = Jupyter;
 
 // deprecated since 4.0, remove in 5+
-var IPython = Jupyter
+window.IPython = Jupyter;
