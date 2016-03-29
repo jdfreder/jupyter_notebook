@@ -53,21 +53,11 @@ require([
 
     requirejs(['custom/custom'], function() {});
 
-    // BEGIN HARDCODED WIDGETS HACK
-    // Try to load the new extension
-    utils.load_extension('widgets/extension').catch(function () {
-    // Fallback to the ipywidgets extension
-        utils.load_extension('widgets/notebook/js/extension').catch(function () {
-            console.warn('Widgets are not available.  Please install widgetsnbextension or ipywidgets 4.0');
-        });
-    });
-    // END HARDCODED WIDGETS HACK
-
     // compat with old IPython, remove for IPython > 3.0
     window.CodeMirror = CodeMirror;
 
     // Setup all of the config related things
-    
+
     var common_options = {
         ws_url : utils.get_body_data("wsUrl"),
         base_url : utils.get_body_data("baseUrl"),
@@ -81,7 +71,7 @@ require([
     common_config.load();
 
     // Instantiate the main objects
-    
+
     var page = new page.Page();
     var pager = new pager.Pager('div#pager', {
         events: events});
@@ -89,7 +79,7 @@ require([
     var keyboard_manager = new keyboardmanager.KeyboardManager({
         pager: pager,
         events: events,
-        actions: acts, 
+        actions: acts,
         config: config_section,
     });
     var save_widget = new savewidget.SaveWidget('span#save_widget', {
@@ -186,10 +176,22 @@ require([
       enumerable: true,
       configurable: false
     });
-    
+
     // Now actually load nbextensions
-    utils.load_extensions_from_config(config_section);
-    utils.load_extensions_from_config(common_config);
+    Promise.all([
+        utils.load_extensions_from_config(config_section),
+        utils.load_extensions_from_config(common_config),
+    ]).then(function() {
+        // BEGIN HARDCODED WIDGETS HACK
+        if (!utils.is_loaded('widgets/extension')) {
+            // Fallback to the ipywidgets extension
+            utils.load_extension('widgets/notebook/js/extension').catch(function () {
+                console.warn('Widgets are not available.  Please install widgetsnbextension or ipywidgets 4.0');
+            });
+        }
+        // END HARDCODED WIDGETS HACK
+    });
+
     notebook.load_notebook(common_options.notebook_path);
 
 });
